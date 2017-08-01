@@ -35,8 +35,8 @@ public class CodeMaker extends javax.swing.JFrame {
         setVisible(true);
         tipoCodigo = ddlTipoCodigo.getSelectedItem().toString();
         //testes
-        txtPathArqSql.setText("/Users/liviaciabati/Documents/Prenacel/MER/ScriptPrenacelv1-2.sql"); 
-        txtPathSalvarArq.setText("/Users/liviaciabati/");
+        txtPathArqSql.setText("C:\\Users\\Livia Ciabati\\Documents\\script.sql"); 
+        txtPathSalvarArq.setText("C:\\Users\\Livia Ciabati\\Documents\\");
         Constantes.Logs += "Lendo arquivo...\n\n";
         try {
             sqlList = SqlParser.ParserMS(new File(txtPathArqSql.getText()));
@@ -106,8 +106,8 @@ public class CodeMaker extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         btnListarTabelas = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        txtVisualRápida = new javax.swing.JTextPane();
-        btnVisualRápida = new javax.swing.JButton();
+        txtVisualRapida = new javax.swing.JTextPane();
+        btnVisualRapida = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         ddlTipoCodigo = new javax.swing.JComboBox();
         jScrollPane5 = new javax.swing.JScrollPane();
@@ -218,15 +218,15 @@ public class CodeMaker extends javax.swing.JFrame {
             }
         });
 
-        txtVisualRápida.setEditable(false);
-        jScrollPane4.setViewportView(txtVisualRápida);
+        txtVisualRapida.setEditable(false);
+        jScrollPane4.setViewportView(txtVisualRapida);
 
-        btnVisualRápida.setLabel("Gerar Visualização Rápida");
-        btnVisualRápida.addActionListener(new java.awt.event.ActionListener()
+        btnVisualRapida.setLabel("Gerar Visualização Rápida");
+        btnVisualRapida.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
             {
-                btnVisualRápidaActionPerformed(evt);
+                btnVisualRapidaActionPerformed(evt);
             }
         });
 
@@ -308,7 +308,7 @@ public class CodeMaker extends javax.swing.JFrame {
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addComponent(ddlTipoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(btnVisualRápida))
+                                .addComponent(btnVisualRapida))
                             .addComponent(btnCriarArq, javax.swing.GroupLayout.Alignment.TRAILING)
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                 .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
@@ -335,7 +335,7 @@ public class CodeMaker extends javax.swing.JFrame {
                         .addGap(10, 10, 10)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                .addComponent(btnVisualRápida)
+                                .addComponent(btnVisualRapida)
                                 .addComponent(ddlTipoCodigo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addComponent(jLabel7, javax.swing.GroupLayout.Alignment.TRAILING))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -394,23 +394,23 @@ public class CodeMaker extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnVisualRápidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualRápidaActionPerformed
+    private void btnVisualRapidaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnVisualRapidaActionPerformed
         int[] tabelasSelecionadas = lstNomeTabelas.getSelectedIndices();
 
         for (int i : tabelasSelecionadas)
         {
             SqlParser tabela = sqlList.get(i);
             Constantes.Logs += tabela.nomeTabela+"\n";
-            txtVisualRápida.setText(Writer.ToView(tabela, txtTemplate.getText(), tipoCodigo));
+            txtVisualRapida.setText(Writer.ToView(tabela, txtTemplate.getText(), tipoCodigo));
         }
-    }//GEN-LAST:event_btnVisualRápidaActionPerformed
+    }//GEN-LAST:event_btnVisualRapidaActionPerformed
 
     private void btnListarTabelasActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnListarTabelasActionPerformed
 
         Constantes.Logs += "Lendo arquivo...\n\n";
         try {
-            sqlList = SqlParser.ParserMySql(new File(txtPathArqSql.getText()));
-            //sqlList = SqlParser.ParserMS(new File(txtPathArqSql.getText()));
+            //sqlList = SqlParser.ParserMySql(new File(txtPathArqSql.getText()));
+            sqlList = SqlParser.ParserMS(new File(txtPathArqSql.getText()));
 
             //Constantes.Logs += "CRIANDO DTO";
             //Escrever Dto
@@ -528,7 +528,8 @@ public class CodeMaker extends javax.swing.JFrame {
             
             Constantes.Logs += "Lendo arquivo...\n\n";
             try {
-                sqlList = SqlParser.ParserMySql(new File(txtPathArqSql.getText()));
+//                sqlList = SqlParser.ParserMySql(new File(txtPathArqSql.getText()));
+                sqlList = SqlParser.ParserMS(new File(txtPathArqSql.getText()));
 
                 String [] arrTabelas = new String[sqlList.size()];
                 for (int i = 0; i < sqlList.size(); i++)
@@ -639,7 +640,7 @@ public class CodeMaker extends javax.swing.JFrame {
     private javax.swing.JButton btnListarTabelas;
     private javax.swing.JButton btnPathSalvarArq;
     private javax.swing.JButton btnSair;
-    private javax.swing.JButton btnVisualRápida;
+    private javax.swing.JButton btnVisualRapida;
     private javax.swing.JComboBox ddlTipoCodigo;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
@@ -661,7 +662,7 @@ public class CodeMaker extends javax.swing.JFrame {
     private javax.swing.JTextField txtPathArqSql;
     private javax.swing.JTextField txtPathSalvarArq;
     private javax.swing.JTextArea txtTemplate;
-    private javax.swing.JTextPane txtVisualRápida;
+    private javax.swing.JTextPane txtVisualRapida;
     // End of variables declaration//GEN-END:variables
     
 
