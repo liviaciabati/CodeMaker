@@ -7,7 +7,7 @@ public class Utils
 {
 	public static String SplitNomeTabela(String nome)
 	{
-		return nome.contains("_") ? nome.substring(nome.indexOf("_") + 1) : nome;
+		return nome.contains(".") ? nome.substring(nome.indexOf(".") + 1) : nome;
 	}
 	
 	public static String SplitNomeColuna(String nome)
@@ -15,7 +15,18 @@ public class Utils
 		return nome.contains("_") ? nome.substring(nome.indexOf("_") + 1) : nome;
 	}
         	
-                public static String SplitNomeSufixo(String nome)
+    public static String SplitNomeSufixo(String nome)
+	{
+		return nome.contains(".") ? nome.substring(nome.lastIndexOf(".") + 1, nome.length()) : "";
+	}
+   	
+    public static String SplitNomeTemplate(String nome)
+	{
+		return nome.contains("_") ? nome.substring(nome.lastIndexOf("_") + 1, nome.length()) : "";
+	}
+    
+	
+	public static String SplitNomePrefixo(String nome)
 	{
 		return nome.contains("_") ? nome.substring(0 ,nome.indexOf("_")) : "";
 	}

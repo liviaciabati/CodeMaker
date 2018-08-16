@@ -46,15 +46,15 @@ public class Constantes
     static public String TIPO_DATETIME2 = "DateTime";
     static public String TIPO_TIME = "Time";
     
-    static final public String INT = "INT";
-    static final public String VARCHAR = "VARCHAR";
-    static final public String CHAR = "CHAR";
-    static final public String BOOL = "TINYINT";
-    static final public String TEXT = "TEXT";
-    static final public String DATE = "DATE";
-    static final public String DATETIME = "DATETIME";
-    static final public String DATETIME2 = "DATETIME2";
-    static final public String TIME = "TIME";
+    static final public String _INT = "[INT]";
+    static final public String _VARCHAR = "[VARCHAR]";
+    static final public String _CHAR = "[CHAR]";
+    static final public String _BOOL = "[TINYINT]";
+    static final public String _TEXT = "[TEXT]";
+    static final public String _DATE = "[DATE]";
+    static final public String _DATETIME = "[DATETIME]";
+    static final public String _DATETIME2 = "[DATETIME2]";
+    static final public String _TIME = "[TIME]";
     
     public static void loadJava()
     {
@@ -92,7 +92,7 @@ public class Constantes
         TIPO_DATE = "DateField";
         TIPO_DATETIME = "DateField";
         TIPO_DATETIME2 = "DateField";
-        TIPO_TIME = "TimeField";
+        //TIPO_TIME = "TimeField";
     }
 }
 

@@ -80,13 +80,13 @@ public class Writer
         valores.put(Constantes.COLUNA_TAMANHO, col.Size == null ? "" : "(max_length=" + col.Size + ")");
         valores.put(Constantes.COLUNA_REFERENCIA, String.valueOf(col.Referencia));
         valores.put(Constantes.COLUNA_NOT_NULL, String.valueOf(col.NotNull));
-        valores.put(Constantes.INT, Constantes.TIPO_INT);
-        valores.put(Constantes.VARCHAR, Constantes.TIPO_VARCHAR);
-        valores.put(Constantes.TEXT, Constantes.TIPO_TEXT);
-        //valores.put(Constantes.BIT, Constantes.TIPO_BIT);
-        valores.put(Constantes.DATE, Constantes.TIPO_DATE);
-        valores.put(Constantes.DATETIME, Constantes.TIPO_DATETIME);
-        valores.put(Constantes.DATETIME2, Constantes.TIPO_DATETIME2);
+        valores.put(Constantes._INT, Constantes.TIPO_INT);
+        valores.put(Constantes._VARCHAR, Constantes.TIPO_VARCHAR);
+        valores.put(Constantes._TEXT, Constantes.TIPO_TEXT);
+        valores.put(Constantes._BOOL, Constantes.TIPO_BOOL);
+        valores.put(Constantes._DATE, Constantes.TIPO_DATE);
+        valores.put(Constantes._DATETIME, Constantes.TIPO_DATETIME);
+        valores.put(Constantes._DATETIME2, Constantes.TIPO_DATETIME2);
     }
 
     public static String TagIf(Node noh)
@@ -224,7 +224,15 @@ public class Writer
             codigo = elemen.getTextContent();
             codigo = Replace(codigo);
             //System.out.println(codigo);
-
+            if(codigo.contains(", )")) {
+            	codigo = codigo.replaceAll(", \\)", ")");
+            }
+            if(codigo.contains(",)")) {
+            	codigo = codigo.replaceAll(",\\)" , ")");
+            }
+            if(codigo.contains(", from")) {
+            	codigo = codigo.replaceAll(", from" , " from");
+            }
         } catch (ParserConfigurationException | SAXException | IOException ex)
         {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
@@ -235,16 +243,20 @@ public class Writer
 
     public static void criarArquivo(String tabela, String texto, String salvarEmPath, String banco, String templateNome)
     {
-        String sufixo = Utils.SplitNomeSufixo(tabela);
+        String prefixo = Utils.SplitNomePrefixo(templateNome);
+    	String sufixo = Utils.SplitNomeTemplate(templateNome);
+        
         String nomeTabela = Utils.SplitNomeTabela(tabela);
-        String templateTipo = templateNome;
+        //String templateTipo = templateNome;
         templateNome = templateNome.split("\\.")[0];
-        File dir = new File(salvarEmPath + "/" + banco  + "/" + templateNome + "/" + sufixo);
+        //File dir = new File(salvarEmPath + "/" + banco  + "/" + templateNome + "/"+ prefixo + "_" + sufixo);
+        File dir = new File(salvarEmPath + "/" + banco  + "/" + templateNome + "/");
         boolean mkdirs = dir.mkdirs();
 
         try
         {
-            File file = new File(salvarEmPath + "/" + banco + "/" + templateNome + "/" + sufixo  + "/" + nomeTabela + templateTipo);
+            //File file = new File(salvarEmPath + "/" + banco + "/" + templateNome + "/" + prefixo +"_"+ sufixo  + "/" + prefixo + nomeTabela + templateTipo);
+            File file = new File(salvarEmPath + "/" + banco + "/" + templateNome + "/" + prefixo + nomeTabela + sufixo);
             // if file doesnt exists, then create it
             if (!file.exists())
             {

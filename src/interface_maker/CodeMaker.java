@@ -35,7 +35,7 @@ public class CodeMaker extends javax.swing.JFrame {
         setVisible(true);
         tipoCodigo = ddlTipoCodigo.getSelectedItem().toString();
         //testes
-        txtPathArqSql.setText("C:\\Users\\Livia Ciabati\\Documents\\script.sql"); 
+        txtPathArqSql.setText("C:\\Users\\Livia Ciabati\\Documents\\SmartMED.sql"); 
         txtPathSalvarArq.setText("C:\\Users\\Livia Ciabati\\Documents\\");
         Constantes.Logs += "Lendo arquivo...\n\n";
         try {
@@ -497,7 +497,8 @@ public class CodeMaker extends javax.swing.JFrame {
                 SqlParser tabela = sqlList.get(i);
                 Constantes.Logs += tabela.nomeTabela+"\n";
                 Writer.toWriteFile(tabela, txtPathSalvarArq.getText(), texto, 
-                        templates[j].getName().contains("_")  ?  templates[j].getName().split("_")[1] : templates[j].getName(),
+                        //templates[j].getName().contains("_")  ?  templates[j].getName().split("_")[1] : 
+                        templates[j].getName(),
                         tipoCodigo);
             }
         }
