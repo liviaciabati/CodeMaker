@@ -71,7 +71,9 @@ public class Writer
         String colunaNome = Utils.SplitNomeColuna(col.Nome);
         String colunaSufixo = Utils.SplitNomeSufixo(col.Nome);
         String colunaLabel = Utils.SplitLabelColuna(col.Nome);
+        String colunaPrefixo = Utils.SplitNomePrefixo(col.Nome);
         valores.put(Constantes.COLUNA_SUFIXO, colunaSufixo);
+        valores.put(Constantes.COLUNA_PREFIXO, colunaPrefixo);
         valores.put(Constantes.COLUNA_NOME, colunaNome);
         valores.put(Constantes.COLUNA_LABEL, colunaLabel);
         valores.put(Constantes.COLUNA_TIPO, String.valueOf(col.Tipo));

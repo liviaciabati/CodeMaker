@@ -27,6 +27,7 @@ public class Constantes
     static final public String TABELA_SUFIXO = "[TABELA_SUFIXO]";
     
     static final public String COLUNA_SUFIXO = "[COLUNA_SUFIXO]";
+    static final public String COLUNA_PREFIXO = "[COLUNA_PREFIXO]";
     static final public String COLUNA_NOME = "[COLUNA_NOME]";
     static final public String COLUNA_TIPO = "[COLUNA_TIPO]";
     static final public String COLUNA_PK = "[COLUNA_PK]";
@@ -55,6 +56,16 @@ public class Constantes
     static final public String _DATETIME = "[DATETIME]";
     static final public String _DATETIME2 = "[DATETIME2]";
     static final public String _TIME = "[TIME]";
+
+    static final public String _Mysql_INT = "int";
+    static final public String _Mysql_VARCHAR = "varchar";
+    static final public String _Mysql_CHAR = "char";
+    static final public String _Mysql_BOOL = "tinyint";
+    static final public String _Mysql_TEXT = "text";
+    static final public String _Mysql_DATE = "date";
+    static final public String _Mysql_DATETIME = "datetime";
+    static final public String _Mysql_DATETIME2 = "datetime2";
+    static final public String _Mysql_TIME = "time";
     
     public static void loadJava()
     {

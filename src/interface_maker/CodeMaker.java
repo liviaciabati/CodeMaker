@@ -35,48 +35,55 @@ public class CodeMaker extends javax.swing.JFrame {
         setVisible(true);
         tipoCodigo = ddlTipoCodigo.getSelectedItem().toString();
         //testes
-        txtPathArqSql.setText("C:\\Users\\Livia Ciabati\\Documents\\SmartMED.sql"); 
+        txtPathArqSql.setText("C:\\Users\\Livia Ciabati\\Dropbox\\codemaker templates\\mBOLD_v2_1 (4).sql"); 
         txtPathSalvarArq.setText("C:\\Users\\Livia Ciabati\\Documents\\");
         Constantes.Logs += "Lendo arquivo...\n\n";
         try {
-            sqlList = SqlParser.ParserMS(new File(txtPathArqSql.getText()));
-            //sqlList = SqlParser.ParserMySql(new File(txtPathArqSql.getText()));
-            SqlParser.ordenaLista(sqlList);
-            String [] arrTabelas = new String[sqlList.size()];
-            
-            for (int i = 0; i < sqlList.size(); i++)
-            {
-                arrTabelas[i] = sqlList.get(i).nomeTabela;
-            }
-
-            lstNomeTabelas.setListData(arrTabelas);
-            lstNomeTabelas.setSelectedIndex(0);
+        	sqlList = SqlParser.ParserMySql(new File(txtPathArqSql.getText()));     
         }
-        catch(IOException e)
-        {
-            txtLogs.setText(txtLogs.getText() + "\n\n" + e.getMessage());
-        } catch (Exception ex) {
+        catch (Exception ex) {
             txtLogs.setText(txtLogs.getText() + "\n\n" + ex.getMessage());
             Logger.getLogger(CodeMaker.class.getName()).log(Level.SEVERE, null, ex);
         }
-        txtLogs.setText(Constantes.Logs + "Done!" );
-        File f = new File("/Users/liviaciabati/Desktop/templates.rar Folder/template_Dto.cs");
-            
-            String linha = "", texto = "";
+        
+        try {        	
+	        if(sqlList == null || sqlList.size() == 0) {
+	        	sqlList = SqlParser.ParserMS(new File(txtPathArqSql.getText()));
+	        }
+        }
+        catch (Exception ex) {
+            txtLogs.setText(txtLogs.getText() + "\n\n" + ex.getMessage());
+            Logger.getLogger(CodeMaker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        SqlParser.ordenaLista(sqlList);
+        String [] arrTabelas = new String[sqlList.size()];
+        
+        for (int i = 0; i < sqlList.size(); i++)
+        {
+            arrTabelas[i] = sqlList.get(i).nomeTabela;
+        }
 
-            BufferedReader br;
-            try {
-                br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(f))));
-                //BufferedReader br = new BufferedReader(new FileReader(sqlFile));
-                while ((linha = br.readLine()) != null) {
-                    texto += linha+"\n";
-                } 
-                txtTemplate.setText(texto);
-            } catch (FileNotFoundException ex) {
-                Logger.getLogger(CodeMaker.class.getName()).log(Level.SEVERE, null, ex);
-            } catch (IOException ex) {
-                Logger.getLogger(CodeMaker.class.getName()).log(Level.SEVERE, null, ex);
-            }     
+        lstNomeTabelas.setListData(arrTabelas);
+        lstNomeTabelas.setSelectedIndex(0);
+        txtLogs.setText(Constantes.Logs + "Done!" );
+//        File f = new File("/Users/liviaciabati/Desktop/templates.rar Folder/template_Dto.cs");
+//            
+//            String linha = "", texto = "";
+//
+//            BufferedReader br;
+//            try {
+//                br = new BufferedReader(new InputStreamReader(new DataInputStream(new FileInputStream(f))));
+//                //BufferedReader br = new BufferedReader(new FileReader(sqlFile));
+//                while ((linha = br.readLine()) != null) {
+//                    texto += linha+"\n";
+//                } 
+//                txtTemplate.setText(texto);
+//            } catch (FileNotFoundException ex) {
+//                Logger.getLogger(CodeMaker.class.getName()).log(Level.SEVERE, null, ex);
+//            } catch (IOException ex) {
+//                Logger.getLogger(CodeMaker.class.getName()).log(Level.SEVERE, null, ex);
+//            }     
     }
 
     @SuppressWarnings("unchecked")
@@ -221,7 +228,7 @@ public class CodeMaker extends javax.swing.JFrame {
         txtVisualRapida.setEditable(false);
         jScrollPane4.setViewportView(txtVisualRapida);
 
-        btnVisualRapida.setLabel("Gerar VisualizaÃ§Ã£o RÃ¡pida");
+        btnVisualRapida.setLabel("Gerar Visualização Rápida");
         btnVisualRapida.addActionListener(new java.awt.event.ActionListener()
         {
             public void actionPerformed(java.awt.event.ActionEvent evt)
@@ -409,32 +416,31 @@ public class CodeMaker extends javax.swing.JFrame {
 
         Constantes.Logs += "Lendo arquivo...\n\n";
         try {
-            //sqlList = SqlParser.ParserMySql(new File(txtPathArqSql.getText()));
-            sqlList = SqlParser.ParserMS(new File(txtPathArqSql.getText()));
-
-            //Constantes.Logs += "CRIANDO DTO";
-            //Escrever Dto
-            //DtoWriter.WriteDtoFile(sqlList, txtPathSalvarArq.getText());
-            //Constantes.Logs += "\nCRIANDO VIEWMODEL";
-            //txtLogs.setText(Constantes.Logs);
-            //Escrever ViewModel
-            //ViewModelWriter.WriteViewModelFile(sqlList, txtPathSalvarArq.getText());
-
-            String [] arrTabelas = new String[sqlList.size()];
-            for (int i = 0; i < sqlList.size(); i++)
-            {
-                arrTabelas[i] = sqlList.get(i).nomeTabela;
-            }
-
-            lstNomeTabelas.setListData(arrTabelas);
+            sqlList = SqlParser.ParserMySql(new File(txtPathArqSql.getText()));
         }
-        catch(IOException e)
-        {
-            txtLogs.setText(txtLogs.getText() + "\n\n" + e.getMessage());
-        } catch (Exception ex) {
+        catch (Exception ex) {
             txtLogs.setText(txtLogs.getText() + "\n\n" + ex.getMessage());
             Logger.getLogger(CodeMaker.class.getName()).log(Level.SEVERE, null, ex);
         }
+
+        try {
+            if(sqlList == null || sqlList.size() == 0) {
+            	sqlList = SqlParser.ParserMS(new File(txtPathArqSql.getText()));
+            }
+        }
+        catch (Exception ex) {
+            txtLogs.setText(txtLogs.getText() + "\n\n" + ex.getMessage());
+            Logger.getLogger(CodeMaker.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        String [] arrTabelas = new String[sqlList.size()];
+        for (int i = 0; i < sqlList.size(); i++)
+        {
+            arrTabelas[i] = sqlList.get(i).nomeTabela;
+        }
+
+        lstNomeTabelas.setListData(arrTabelas);
+    
         txtLogs.setText(Constantes.Logs + "Done!" );
     }//GEN-LAST:event_btnListarTabelasActionPerformed
 
@@ -516,6 +522,7 @@ public class CodeMaker extends javax.swing.JFrame {
 
         //verifica se a resposta foi uma resposta de aprovacao
         if (answer == JFileChooser.APPROVE_OPTION) {
+        	sqlList = null;
             //Armazena o caminho do arquivo selecionada
             File f = new File(jf.getSelectedFile().getAbsolutePath());
             txtPathArqSql.setText(jf.getSelectedFile().getAbsolutePath());
@@ -529,26 +536,32 @@ public class CodeMaker extends javax.swing.JFrame {
             
             Constantes.Logs += "Lendo arquivo...\n\n";
             try {
-//                sqlList = SqlParser.ParserMySql(new File(txtPathArqSql.getText()));
-                sqlList = SqlParser.ParserMS(new File(txtPathArqSql.getText()));
-
-                String [] arrTabelas = new String[sqlList.size()];
-                for (int i = 0; i < sqlList.size(); i++)
-                {
-                    arrTabelas[i] = sqlList.get(i).nomeTabela;
-                }
-
-                lstNomeTabelas.setListData(arrTabelas);
-                if(arrTabelas.length> 0)
-                    lstNomeTabelas.setSelectedIndex(0);
+            	sqlList = SqlParser.ParserMySql(new File(txtPathArqSql.getText()));
             }
-            catch(IOException e)
-            {
-                txtLogs.setText(txtLogs.getText() + "\n\n" + e.getMessage());
-            } catch (Exception ex) {
+            catch (Exception ex) {
                 txtLogs.setText(txtLogs.getText() + "\n\n" + ex.getMessage());
                 Logger.getLogger(CodeMaker.class.getName()).log(Level.SEVERE, null, ex);
             }
+            try {
+                if(sqlList == null || sqlList.size() == 0) {
+                	sqlList = SqlParser.ParserMS(new File(txtPathArqSql.getText()));
+                }
+            }
+            catch (Exception ex) {
+                txtLogs.setText(txtLogs.getText() + "\n\n" + ex.getMessage());
+                Logger.getLogger(CodeMaker.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            
+            String [] arrTabelas = new String[sqlList.size()];
+            for (int i = 0; i < sqlList.size(); i++)
+            {
+                arrTabelas[i] = sqlList.get(i).nomeTabela;
+            }
+
+            lstNomeTabelas.setListData(arrTabelas);
+            if(arrTabelas.length> 0)
+                lstNomeTabelas.setSelectedIndex(0);
+            
             txtLogs.setText(Constantes.Logs + "Done!" );
 
         } else {
