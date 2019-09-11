@@ -35,7 +35,7 @@ public class CodeMaker extends javax.swing.JFrame {
         setVisible(true);
         tipoCodigo = ddlTipoCodigo.getSelectedItem().toString();
         //testes
-        txtPathArqSql.setText("C:\\Users\\Livia Ciabati\\Dropbox\\codemaker templates\\mBOLD_v2_1 (4).sql"); 
+        txtPathArqSql.setText("C:\\Users\\Livia Ciabati\\Dropbox\\Selma 2\\BOLD_3.0.1_nodrop.sql"); 
         txtPathSalvarArq.setText("C:\\Users\\Livia Ciabati\\Documents\\");
         Constantes.Logs += "Lendo arquivo...\n\n";
         try {
@@ -541,6 +541,7 @@ public class CodeMaker extends javax.swing.JFrame {
             catch (Exception ex) {
                 txtLogs.setText(txtLogs.getText() + "\n\n" + ex.getMessage());
                 Logger.getLogger(CodeMaker.class.getName()).log(Level.SEVERE, null, ex);
+                sqlList = null;
             }
             try {
                 if(sqlList == null || sqlList.size() == 0) {

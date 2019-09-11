@@ -19,11 +19,13 @@ import util_maker.Utils;
 
 public class SqlParser {
 
+    public String tipoBanco;
     public String nomeBanco;
     public String nomeTabela;
     public List<Coluna> colunas;
 
     public SqlParser() {
+    	tipoBanco = "";
         nomeBanco = "";
         nomeTabela = "";
         colunas = new ArrayList<Coluna>();
@@ -45,6 +47,7 @@ public class SqlParser {
 		List<SqlParser> sqlList = new ArrayList<SqlParser>();
 		try {
 			SqlParser sqlObj = new SqlParser();
+			sqlObj.tipoBanco = "MySQL";
 			String linha = "";
 			String nomeBanco = "";
 			
@@ -57,7 +60,10 @@ public class SqlParser {
 			    if (Pattern.matches("CREATE DATABASE.*", linha)) {
 			        //System.out.println(linha);
 			        sqlObj = new SqlParser();
-			        sqlObj.nomeBanco = linha.split("\\`")[1].split("\\`")[0];
+			        if(Pattern.matches("\\`\\.\\`*", linha))
+				        sqlObj.nomeBanco = linha.split("\\.\\`")[1].split("\\`")[0];
+			        else 	
+			        	sqlObj.nomeBanco = linha.split("\\`")[1].split("\\`")[0];
 			        nomeBanco = sqlObj.nomeBanco;
 			    }
 			    
@@ -67,10 +73,19 @@ public class SqlParser {
 			    if (Pattern.matches("CREATE TABLE.*", linha)) 
 			    {
 			        sqlObj = new SqlParser();
-			        sqlObj.nomeBanco = nomeBanco;
+
+			        if(Pattern.matches("\\`\\.\\`.*", linha))
+				        sqlObj.nomeBanco = linha.split("\\.\\`")[1].split("\\`")[0];
+			        else 	
+			        	sqlObj.nomeBanco = linha.split("\\`")[1].split("\\`")[0];
 
 //                sqlObj.nomeTabela = linha.split("`[A-Za-z0-9]*`.`")[1].split("`")[0];
-			        sqlObj.nomeTabela = linha.split("`")[1];
+
+			        if(Pattern.matches(".*\\`\\.\\`.*", linha))
+				        sqlObj.nomeTabela = linha.split("`.`")[1].split("`")[0];
+			        else 	
+				        sqlObj.nomeTabela = linha.split("`")[1];
+			        
 
 			        //Le todos os atributos
 			        linha = br.readLine();
@@ -82,7 +97,7 @@ public class SqlParser {
 			            col.NotNull = linha.contains("NOT NULL");
 			            col.Tipo = linha.contains("(") ? linha.split("`.*` ")[1].split("\\(")[0] : linha.split("`.*` ")[1].split("[, ].*")[0];
 
-			            switch (col.Tipo)
+			            switch (col.Tipo.toLowerCase())
 			            {
 			                case Constantes._Mysql_VARCHAR:
 			                    col.Size = Integer.parseInt(linha.split("\\(")[1].split("\\)")[0]);
@@ -198,6 +213,7 @@ public class SqlParser {
         try {
 			SqlParser sqlObj = new SqlParser();
 
+			sqlObj.tipoBanco = "MS";
 			String linha = "";
 			String nomeBanco = "";
 			
@@ -264,6 +280,9 @@ public class SqlParser {
 			                case "datetime":
 			                    col.Tipo = Constantes._DATETIME;
 			                    break;
+			                case "tinyint":
+			                    col.Tipo = Constantes._BOOL;
+			                    break;
 			                case "int":
 			                    col.Tipo = Constantes._INT;
 			                    break;
@@ -323,14 +342,16 @@ public class SqlParser {
 			    //Encontro as chaves estrangeiras
 			    if (Pattern.matches(".*ALTER TABLE.*FOREIGN KEY.*", linha)) {
 			        String tabela = linha.split("\\[[A-Za-z]*\\]\\.\\[")[1].split("]")[0];
+			        String coluna = linha.split("\\(\\[")[1].split("\\]\\)")[0];
 			        linha = br.readLine();
 
 			        if (Pattern.matches(".*REFERENCES.*", linha)) {
 			            //Encontra a tabela na lista de tabelas
 			            for (SqlParser sqlParser : sqlList) {
-			                if (sqlParser.nomeTabela.equals(tabela)) {
+			            	String teste = sqlParser.nomeTabela.replace("dbo.", "");
+			                if (teste.equals(tabela)) {
 			                    //Encontar a coluna que � a chave estrangeira
-			                    String coluna = linha.split("\\(\\[")[1].split("]\\)")[0];
+			                    //String coluna = linha.split("\\(\\[")[1].split("]\\)")[0];
 			                    String referencia = linha.split("\\[[A-Za-z]*\\]\\.\\[")[1].split("]")[0];
 			                    for (Coluna col : sqlParser.colunas) {
 			                        if (col.Nome.contains("_") && col.Nome.split("_")[1].equals(coluna.split("_")[1])) {

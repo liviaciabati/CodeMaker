@@ -68,14 +68,22 @@ public class Writer
         valores.put(Constantes.BANCO_NOME, bancoNome);
         valores.put(Constantes.TABELA_NOME, tabelaNome);
         valores.put(Constantes.TABELA_SUFIXO, tabelaSufixo);
-        String colunaNome = Utils.SplitNomeColuna(col.Nome);
-        String colunaSufixo = Utils.SplitNomeSufixo(col.Nome);
-        String colunaLabel = Utils.SplitLabelColuna(col.Nome);
-        String colunaPrefixo = Utils.SplitNomePrefixo(col.Nome);
-        valores.put(Constantes.COLUNA_SUFIXO, colunaSufixo);
-        valores.put(Constantes.COLUNA_PREFIXO, colunaPrefixo);
-        valores.put(Constantes.COLUNA_NOME, colunaNome);
-        valores.put(Constantes.COLUNA_LABEL, colunaLabel);
+        //if(tabela.tipoBanco == "MS") {
+	        String colunaNome = Utils.SplitNomeColuna(col.Nome);
+	        String colunaSufixo = Utils.SplitNomeSufixo(col.Nome);
+	        String colunaLabel = Utils.SplitLabelColuna(col.Nome);
+	        String colunaPrefixo = Utils.SplitNomePrefixo(col.Nome);
+          valores.put(Constantes.COLUNA_SUFIXO, colunaSufixo);
+          valores.put(Constantes.COLUNA_PREFIXO, colunaPrefixo);
+          valores.put(Constantes.COLUNA_NOME, colunaNome);
+          valores.put(Constantes.COLUNA_LABEL, colunaNome);
+//        }
+//        else {
+//            valores.put(Constantes.COLUNA_SUFIXO, "");
+//            valores.put(Constantes.COLUNA_PREFIXO, "");
+//            valores.put(Constantes.COLUNA_NOME, col.Nome);
+//            valores.put(Constantes.COLUNA_LABEL, col.Nome);        	
+//        }
         valores.put(Constantes.COLUNA_TIPO, String.valueOf(col.Tipo));
         valores.put(Constantes.COLUNA_PK, String.valueOf(col.PK));
         valores.put(Constantes.COLUNA_FK, String.valueOf(col.FK));
@@ -235,6 +243,29 @@ public class Writer
             if(codigo.contains(", from")) {
             	codigo = codigo.replaceAll(", from" , " from");
             }
+            if(codigo.contains(", where")) {
+            	codigo = codigo.replaceAll(", where" , " where");
+            }
+
+            if(codigo.contains("<template>")) {
+            	codigo = codigo.replaceAll("<template>" , "");
+            }
+            if(codigo.contains("</template>")) {
+            	codigo = codigo.replaceAll("</template>" , "");
+            }
+            
+            if(codigo.contains("ANDAND")) {
+            	codigo = codigo.replaceAll("ANDAND" , "&&");
+            }
+            if(codigo.contains("&amp;")) {
+            	codigo = codigo.replaceAll("&amp;" , "&");
+            }
+
+            if(codigo.contains("TRUETRUE")) {
+            	codigo = codigo.replaceAll("TRUETRUE" , "true");
+            }
+            
+            
         } catch (ParserConfigurationException | SAXException | IOException ex)
         {
             Logger.getLogger(Writer.class.getName()).log(Level.SEVERE, null, ex);
